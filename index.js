@@ -1,0 +1,88 @@
+const express = require('express')
+const cors = require('cors')
+const mysql = require('mysql2')
+require('dotenv').config()
+const app = express()
+app.use(cors())
+app.use(express.json())
+const connection = mysql.createConnection(process.env.DATABASE_URL)
+app.get('/', (req, res) => {
+    res.send('Hello baimon!!')
+})
+app.get('/users', (req, res) => {
+    connection.query(
+        'SELECT * FROM users',
+        function (err, results, fields) {
+            res.send(results)
+        }
+    )
+})
+app.get('/users/:id', (req, res) => {
+    const id = req.params.id;
+    connection.query(
+        'SELECT * FROM users WHERE id = ?', [id],
+        function (err, results, fields) {
+            res.send(results)
+        }
+    )
+})
+app.post('/users', (req, res) => {
+    connection.query(
+        'INSERT INTO `users` (`fname`, `lname`, `username`, `password`) VALUES (?, ?, ?, ?)',
+        [req.body.fname, req.body.lname, req.body.username, req.body.password],
+         function (err, results, fields) {
+            if (err) {
+                console.error('Error in POST /users:', err);
+                res.status(500).send('Error adding user');
+            } else {
+                res.status(201).send(results);
+            }
+        }
+    )
+})
+app.put('/users', (req, res) => {
+    connection.query(
+        'UPDATE `users` SET `fname`=?, `lname`=?, `username`=?, `password`=? WHERE id =?',
+        [req.body.fname, req.body.lname, req.body.username, req.body.password, req.body.id],
+         function (err, results, fields) {
+            res.send(results)
+        }
+    )
+})
+app.delete('/users', (req, res) => {
+    connection.query(
+        'DELETE FROM `users` WHERE id =?',
+        [req.body.id],
+         function (err, results, fields) {
+            res.send(results)
+        }
+    )
+})
+
+
+app.post('/login', (req, res) => {
+    connection.query(
+      'SELECT * FROM users WHERE username = ? AND password = ?',
+      [req.body.username, req.body.password],
+      function (err, results, fields) {
+        if (error) throw error;
+        if (results.length > 0) {
+          const regis = results[0];
+          console.log(regis);
+          res.send({ 
+            message: 'Login successful', 
+            regis,
+          });
+        } else {
+          res.status(401).send({ message: 'Invalid email or password' });
+        }
+        connection.release();
+      });
+    });
+ 
+    
+
+
+app.listen(process.env.PORT || 3000, () => {
+    console.log(' 3000')
+})
