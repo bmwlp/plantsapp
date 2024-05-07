@@ -60,26 +60,26 @@ app.delete('/users', (req, res) => {
 })
 
 
-app.post('/login', (req, res) => {
+
+//register user
+app.get('/register', (req, res) => {
     connection.query(
-      'SELECT * FROM users WHERE username = ? AND password = ?',
-      [req.body.username, req.body.password],
-      function (err, results, fields) {
-        if (error) throw error;
-        if (results.length > 0) {
-          const regis = results[0];
-          console.log(regis);
-          res.send({ 
-            message: 'Login successful', 
-            regis,
-          });
-        } else {
-          res.status(401).send({ message: 'Invalid email or password' });
+        'SELECT * FROM users',
+        function (err, results, fields) {
+            res.send(results)
         }
-        connection.release();
-      });
-    });
- 
+    )
+  })
+  app.get('/register/:id', (req, res) => {
+    const id = req.params.id;
+    connection.query(
+        'SELECT * FROM users WHERE id = ?', [id],
+        function (err, results, fields) {
+            res.status(200).send(results)
+        }
+    )
+  })
+  
     
 
 
