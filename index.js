@@ -162,14 +162,13 @@ app.get('/favourite/get', (req, res) => {
     
     app.delete('/favourite/:id', async (req, res) => {
         const id = req.params.id;
-      
-        try {
-          await connection.query('DELETE FROM `fav` WHERE id = ?', [id]);
-          res.json({ message: `รายการโปรดที่มี id ${id} ถูกลบสำเร็จ` });
-        } catch (err) {
-          console.error(err);
-          res.status(500).json({ message: 'เกิดข้อผิดพลาดระหว่างการลบรายการโปรด' });
-        }
+        connection.query(
+            'DELETE FROM `Favourite` WHERE id =?',
+            [req.body.id],
+             function (err, results, fields) {
+                res.send(results)
+            }
+        )
       });
 
 
