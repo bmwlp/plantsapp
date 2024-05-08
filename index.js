@@ -85,7 +85,7 @@ app.get('/models', (req, res) => {
     )
 })
 app.get('/models/id', (req, res) => {
-    const id = req.params.id;
+    const id = req.params.plantid;
     connection.query(
         'SELECT * FROM models WHERE plantid = ?',
         function (err, results, fields) {
