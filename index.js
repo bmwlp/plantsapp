@@ -121,36 +121,35 @@ app.get('/favourite/get', (req, res) => {
     )
 })
 
-        app.get('/favourite/select', (req, res) => {
-            connection.query(
-                'SELECT models.plantName, models.price, models.pic FROM fav INNER JOIN models ON fav.plantid = models.plantid',
-                function (err, results, fields) {
-                    if (err) {
-                        console.error('Error fetching favourites:', err);
-                        res.status(500).json({ error: 'Error fetching favourites' });
-                        return;
+    app.get('/favourite/select', (req, res) => {
+        connection.query(
+            'SELECT models.plantName, models.price, models.pic FROM fav INNER JOIN models ON fav.plantid = models.plantid',
+            function (err, results, fields) {
+                if (err) {
+                    console.error('Error fetching favourites:', err);
+                    res.status(500).json({ error: 'Error fetching favourites' });
+                    return;
                     }
-                    res.json(results);
-                }
-            )
-        })
+                res.json(results);
+             }
+        )
+    })
        
-
-app.post('/favourite', (req, res) => {
-    const { plantId } = req.body;
-    connection.query(
-        'INSERT INTO fav (plantId) VALUES (?)',
-        [plantId],
-        function (err, results, fields) {
-            if (err) {
-                console.error('Error adding favourite:', err);
-                res.status(500).json({ error: 'Error adding favourite' });
-                return;
+    app.delete('/favourite/delete/:id', (req, res) => {
+        const { id } = req.params; // รับค่า id ที่ต้องการลบจาก URL parameters
+        connection.query(
+            'DELETE FROM fav WHERE favid = ?', [id], // ลบข้อมูลที่ตรงกับ favid ที่รับเข้ามา
+            function (err, results, fields) {
+                if (err) {
+                    console.error('Error deleting favourite:', err);
+                    res.status(500).json({ error: 'Error deleting favourite' });
+                    return;
+                }
+                res.json({ success: true });
             }
-            res.status(201).json({ message: 'Favourite added successfully' });
-        }
-    )
-})
+        )
+    });
+    
 
 app.listen(process.env.PORT || 3000, () => {
     console.log(' 3000')
