@@ -75,7 +75,15 @@ app.post('/login', (req, res) => {
     );
 });
 
-
+//getmodel
+app.get('/models', (req, res) => {
+    connection.query(
+        'SELECT * FROM models',
+        function (err, results, fields) {
+            res.send(results)
+        }
+    )
+})
 
 app.listen(process.env.PORT || 3000, () => {
     console.log(' 3000')
