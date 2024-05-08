@@ -107,6 +107,19 @@ app.get('/models/:id', (req, res) => {
 
 
 // เส้นทาง GET สำหรับการดึงข้อมูลทั้งหมดจากตาราง 'fav'
+app.get('/favourite/get', (req, res) => {
+    connection.query(
+        'SELECT * FROM fav ',
+        function (err, results, fields) {
+            if (err) {
+                console.error('Error fetching favourites:', err);
+                res.status(500).json({ error: 'Error fetching favourites' });
+                return;
+            }
+            res.json(results);
+        }
+    )
+})
 app.get('/favourite/select', (req, res) => {
     connection.query(
         'SELECT * FROM fav INNER JOIN model ON fav.plantid = model.plantid;',
