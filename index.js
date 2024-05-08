@@ -107,7 +107,7 @@ app.get('/models/:id', (req, res) => {
 
 
 // เส้นทาง GET สำหรับการดึงข้อมูลทั้งหมดจากตาราง 'fav'
-app.get('/favourite', (req, res) => {
+app.get('/favourite/select', (req, res) => {
     connection.query(
         'SELECT fav.favid, model.*  FROM fav INNER JOIN model ON fav.plantid = model.plantid ',
         function (err, results, fields) {
