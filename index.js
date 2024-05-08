@@ -134,6 +134,21 @@ app.get('/favourite/get', (req, res) => {
              }
         )
     })
+    app.post('/favourite/add', (req, res) => {
+        const { plantId } = req.body;
+        connection.query(
+            'INSERT INTO fav (plantId) VALUES (?)',
+            [plantId],
+            function (err, results, fields) {
+                if (err) {
+                    console.error('Error adding favourite:', err);
+                    res.status(500).json({ error: 'Error adding favourite' });
+                    return;
+                }
+                res.status(201).json({ message: 'Favourite added successfully' });
+            }
+        )
+    })
     
     app.delete('/favourite', (req, res) => {
         connection.query(
@@ -156,6 +171,8 @@ app.get('/favourite/get', (req, res) => {
           res.status(500).json({ message: 'เกิดข้อผิดพลาดระหว่างการลบรายการโปรด' });
         }
       });
+
+
 app.listen(process.env.PORT || 3000, () => {
     console.log(' 3000')
 })
