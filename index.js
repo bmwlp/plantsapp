@@ -59,26 +59,22 @@ app.delete('/users', (req, res) => {
     )
 })
 
+//login
+app.post('/login', (req, res) => {
+    connection.execute(
+        'SELECT * FROM user WHERE username=? AND password=?',
+        [req.body.username,req.body.password],
+        function(err, results, fields) {
+            if (err) {
+                console.error('Error in POST /register:', err);
+                res.status(500).send('Error Login');
+            } else {
+                res.status(200).send(results);
+            }
+        }
+    );
+});
 
-//register user
-app.get('/register', (req, res) => {
-    connection.query(
-        'SELECT * FROM users',
-        function (err, results, fields) {
-            res.send(results)
-        }
-    )
-  })
-  app.get('/register/:username', (req, res) => {
-    const id = req.params.id;
-    connection.query(
-        'SELECT * FROM users WHERE id = ?', [id],
-        function (err, results, fields) {
-            res.status(200).send(results)
-        }
-    )
-  })
-  
 
 
 app.listen(process.env.PORT || 3000, () => {
