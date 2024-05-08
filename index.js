@@ -60,7 +60,6 @@ app.delete('/users', (req, res) => {
 })
 
 
-
 //register user
 app.get('/register', (req, res) => {
     connection.query(
@@ -70,7 +69,7 @@ app.get('/register', (req, res) => {
         }
     )
   })
-  app.get('/register/:id', (req, res) => {
+  app.get('/register/:username', (req, res) => {
     const id = req.params.id;
     connection.query(
         'SELECT * FROM users WHERE id = ?', [id],
@@ -80,7 +79,6 @@ app.get('/register', (req, res) => {
     )
   })
   
-    
 
 
 app.listen(process.env.PORT || 3000, () => {
