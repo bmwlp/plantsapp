@@ -84,15 +84,27 @@ app.get('/models', (req, res) => {
         }
     )
 })
+
+
 app.get('/models/:id', (req, res) => {
-    const id = req.params.plantid;
+    const id = req.params.id; 
     connection.query(
         'SELECT * FROM models WHERE plantid = ?',
+        [id], 
         function (err, results, fields) {
-            res.status(200).send(results)
+            if (err) {
+               
+                console.error('Error retrieving data:', err);
+                res.status(500).send('Internal Server Error');
+            } else {
+               
+                res.status(200).send(results);
+            }
         }
-    )
-})
+    );
+});
+
+
 
 
 app.listen(process.env.PORT || 3000, () => {
