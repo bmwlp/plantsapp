@@ -163,13 +163,19 @@ app.get('/favourite/get', (req, res) => {
     app.delete('/favourite/:id', async (req, res) => {
         const id = req.params.id;
         connection.query(
-            'DELETE FROM `Favourite` WHERE id =?',
-            [req.body.id],
-             function (err, results, fields) {
-                res.send(results)
+            'DELETE FROM `fav` WHERE id = ?',
+            [id],
+            function (err, results, fields) {
+                if (err) {
+                    console.error(err);
+                    res.status(500).json({ message: 'เกิดข้อผิดพลาดในการลบรายการโปรด' });
+                    return;
+                }
+                res.json({ message: `รายการโปรดที่มี id ${id} ถูกลบสำเร็จ` });
             }
-        )
-      });
+        );
+    });
+    
 
 
 app.listen(process.env.PORT || 3000, () => {
