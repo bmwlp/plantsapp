@@ -135,7 +135,7 @@ app.get('/favourite/get', (req, res) => {
         )
     })
        
-    app.delete('/favourite/delete', (req, res) => {
+    app.delete('/favourite/:id', (req, res) => {
         connection.query(
             'DELETE FROM `fav` WHERE id =?',
             [req.body.id],
