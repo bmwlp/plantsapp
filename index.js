@@ -75,7 +75,7 @@ app.post('/login', (req, res) => {
     );
 });
 
-//getmodel
+
 app.get('/models', (req, res) => {
     connection.query(
         'SELECT * FROM models',
@@ -105,6 +105,38 @@ app.get('/models/:id', (req, res) => {
 });
 
 
+
+// เส้นทาง GET สำหรับการดึงข้อมูลทั้งหมดจากตาราง 'fav'
+app.get('/favourite', (req, res) => {
+    connection.query(
+        'SELECT * FROM fav',
+        function (err, results, fields) {
+            if (err) {
+                console.error('Error fetching favourites:', err);
+                res.status(500).json({ error: 'Error fetching favourites' });
+                return;
+            }
+            res.json(results);
+        }
+    )
+})
+
+// เส้นทาง POST สำหรับการเพิ่มข้อมูลเข้าตาราง 'fav'
+app.post('/favourite', (req, res) => {
+    const { name, detail, price, avatar } = req.body;
+    connection.query(
+        'INSERT INTO fav (name, decription, price, pic) VALUES (?, ?, ?, ?)',
+        [name, detail, price, avatar],
+        function (err, results, fields) {
+            if (err) {
+                console.error('Error adding favourite:', err);
+                res.status(500).json({ error: 'Error adding favourite' });
+                return;
+            }
+            res.status(201).json({ message: 'Favourite added successfully' });
+        }
+    )
+})
 
 
 app.listen(process.env.PORT || 3000, () => {
