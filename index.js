@@ -85,6 +85,17 @@ app.get('/models', (req, res) => {
     )
 })
 
+
+app.get('/models/user', (req, res) => {
+    const id = req.params.id;
+    connection.query(
+        'SELECT * FROM models WHERE id = ?', [id],
+        function (err, results, fields) {
+            res.send(results)
+        }
+    )
+})
+
 app.listen(process.env.PORT || 3000, () => {
     console.log(' 3000')
 })
