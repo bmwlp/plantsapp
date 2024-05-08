@@ -62,7 +62,7 @@ app.delete('/users', (req, res) => {
 //login
 app.post('/login', (req, res) => {
     connection.execute(
-        'SELECT * FROM user WHERE username=? AND password=?',
+        'SELECT * FROM users WHERE username=? AND password=?',
         [req.body.username,req.body.password],
         function(err, results, fields) {
             if (err) {
