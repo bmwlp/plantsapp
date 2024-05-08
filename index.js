@@ -121,12 +121,11 @@ app.get('/favourite', (req, res) => {
     )
 })
 
-// เส้นทาง POST สำหรับการเพิ่มข้อมูลเข้าตาราง 'fav'
 app.post('/favourite', (req, res) => {
-    const { name, detail, price, avatar } = req.body;
+    const { plantId } = req.body;
     connection.query(
-        'INSERT INTO fav (name, decription, price, pic) VALUES (?, ?, ?, ?)',
-        [name, detail, price, avatar],
+        'INSERT INTO fav (plantId) VALUES (?)',
+        [plantId],
         function (err, results, fields) {
             if (err) {
                 console.error('Error adding favourite:', err);
@@ -137,7 +136,6 @@ app.post('/favourite', (req, res) => {
         }
     )
 })
-
 
 app.listen(process.env.PORT || 3000, () => {
     console.log(' 3000')
