@@ -111,7 +111,7 @@ app.put('/repass' , (req,res) => {
 app.delete('/userdel', (req, res) => {
     connection.query(
         'DELETE FROM `users` WHERE username =?',
-        [req.body.username],
+        [req.body.id],
          function (err, results, fields) {
             res.send(results)
         }
