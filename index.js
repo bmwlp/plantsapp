@@ -62,14 +62,19 @@ app.delete('/users', (req, res) => {
 //login
 app.post('/login', (req, res) => {
     connection.execute(
-        'SELECT * FROM users WHERE username=? AND password=?',
+        'SELECT id, fname, lname FROM users WHERE username=? AND password=?',
         [req.body.username,req.body.password],
         function(err, results, fields) {
             if (err) {
                 console.error('Error in POST /register:', err);
                 res.status(500).send('Error Login');
             } else {
-                res.status(200).send(results);
+                if (results.length > 0) {
+                    const userData = results[0]; // Assuming only one user is returned
+                    res.status(200).send(userData);
+                } else {
+                    res.status(404).send('User not found'); // User not found
+                }
             }
         }
     );
