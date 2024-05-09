@@ -75,6 +75,24 @@ app.post('/login', (req, res) => {
     );
 });
 
+app.put('/users/:username', (req, res) => {
+    const { username } = req.params;
+    const { fname, lname } = req.body;
+
+    connection.execute(
+        'UPDATE users SET fname = ?, lname = ? WHERE username = ?',
+        [fname, lname, username],
+        function(err, results, fields) {
+            if (err) {
+                console.error('Error in PUT /users/:username:', err);
+                res.status(500).send('Error updating user');
+            } else {
+                res.status(200).send('User updated successfully');
+            }
+        }
+    );
+});
+
 
 
 app.get('/models', (req, res) => {
