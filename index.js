@@ -134,6 +134,20 @@ app.get('/favourite/get', (req, res) => {
              }
         )
     })
+
+    app.get('/favourite/detail/:id', (req, res) => {
+        connection.query(
+            'SELECT * FROM fav INNER JOIN models ON fav.plantid = models.plantid',
+            function (err, results, fields) {
+                if (err) {
+                    console.error('Error fetching favourites:', err);
+                    res.status(500).json({ error: 'Error fetching favourites' });
+                    return;
+                    }
+                res.json(results);
+             }
+        )
+    })
     app.post('/favourite/add', (req, res) => {
         const { plantId } = req.body;
         connection.query(
