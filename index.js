@@ -193,6 +193,19 @@ app.get('/favourite/get', (req, res) => {
         )
     })
 
+    app.get('/cart/select', (req, res) => {
+        connection.query(
+            'SELECT models.plantName, models.price, models.pic FROM cart INNER JOIN models ON cart.plantid = models.plantid',
+            function (err, results, fields) {
+                if (err) {
+                    console.error('Error fetching favourites:', err);
+                    res.status(500).json({ error: 'Error fetching favourites' });
+                    return;
+                    }
+                res.json(results);
+             }
+        )
+    })
 
 app.listen(process.env.PORT || 3000, () => {
     console.log(' 3000')
