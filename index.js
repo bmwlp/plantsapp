@@ -197,6 +197,20 @@ app.get('/favourite/get', (req, res) => {
     });
     
 
+    app.get('/cart/get', (req, res) => {
+        connection.query(
+            'SELECT * FROM cart ',
+            function (err, results, fields) {
+                if (err) {
+                    console.error('Error fetching favourites:', err);
+                    res.status(500).json({ error: 'Error fetching favourites' });
+                    return;
+                }
+                res.json(results);
+            }
+        )
+    })
+
     app.post('/cart/add', (req, res) => {
         const { plantId } = req.body;
         connection.query(
