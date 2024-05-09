@@ -211,18 +211,26 @@ app.delete('/favdel/:id', async (req, res) => {
     );
 });
 
+app.delete('/favdel/:id', async (req, res) => {
+    const id = req.params.id;
+    connection.query(
+        'DELETE FROM `fav` WHERE id = ?',
+        [id],
+        function (err, results, fields) {
+            if (err) {
+                console.log(err);
+                res.status(500).send({ status: 'error', message: 'Error deleting record' });
+            } else {
+                if (results.affectedRows == 0) {
+                    res.status(404).send({ status: 'not found', message: 'Record not found' });
+                } else {
+                    res.send({ status: 'success', message: 'Record deleted successfully' });
+                }
+            }
+        }
+    );
+});
 
-    app.delete('/favdel/:id', async (req, res) => {
-        const id = req.params.id;
-        connection.query(
-          'DELETE FROM `fav` WHERE id = ?',
-          [id],
-          function (err, results, fields) {
-            res.send(results)
-          }
-        );
-      });
-      
     
 
     app.get('/cart/get', (req, res) => {
