@@ -227,6 +227,22 @@ app.get('/favourite/get', (req, res) => {
         )
     })
 
+    app.delete('/delcart/:id', async (req, res) => {
+        const id = req.params.id;
+        connection.query(
+            'DELETE FROM `fav` WHERE id = ?',
+            [id],
+            function (err, results, fields) {
+                if (err) {
+                    console.error(err);
+                    res.status(500).json({ message: 'เกิดข้อผิดพลาดในการลบรายการโปรด' });
+                    return;
+                }
+                res.json({ message: `รายการโปรดที่มี id ${id} ถูกลบสำเร็จ` });
+            }
+        );
+    });
+
 app.listen(process.env.PORT || 3000, () => {
     console.log(' 3000')
 })
