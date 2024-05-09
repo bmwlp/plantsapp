@@ -142,16 +142,15 @@ app.get('/favourite/get', (req, res) => {
             [id], 
             function (err, results, fields) {
                 if (err) {
-                   
                     console.error('Error retrieving data:', err);
                     res.status(500).send('Internal Server Error');
                 } else {
-                   
                     res.status(200).send(results);
                 }
             }
         );
     });
+    
     
     
     app.post('/favourite/add', (req, res) => {
