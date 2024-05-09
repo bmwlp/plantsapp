@@ -231,6 +231,17 @@ app.delete('/favdel/:id', async (req, res) => {
     );
 });
 
+app.delete('/favourite', (req, res) => {
+    connection.query(
+        'DELETE FROM `fav` WHERE id =?',
+        [req.body.id],
+         function (err, results, fields) {
+            res.send(results)
+        }
+    )
+})
+
+
     
 
     app.get('/cart/get', (req, res) => {
