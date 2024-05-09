@@ -123,7 +123,7 @@ app.get('/favourite/get', (req, res) => {
 
     app.get('/favourite/select', (req, res) => {
         connection.query(
-            'SELECT models.plantName, models.price, models.pic FROM fav INNER JOIN models ON fav.plantid = models.plantid',
+            'SELECT models.plantName, models.price, models.pic, models.category FROM fav INNER JOIN models ON fav.plantid = models.plantid',
             function (err, results, fields) {
                 if (err) {
                     console.error('Error fetching favourites:', err);
@@ -195,7 +195,7 @@ app.get('/favourite/get', (req, res) => {
 
     app.get('/cart/select', (req, res) => {
         connection.query(
-            'SELECT models.plantName, models.price, models.pic FROM cart INNER JOIN models ON cart.plantid = models.plantid',
+            'SELECT models.plantName, models.price, models.pic, models.category FROM cart INNER JOIN models ON cart.plantid = models.plantid',
             function (err, results, fields) {
                 if (err) {
                     console.error('Error fetching favourites:', err);
