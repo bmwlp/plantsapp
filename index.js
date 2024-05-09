@@ -138,7 +138,7 @@ app.get('/favourite/get', (req, res) => {
     app.get('/detailfav/:id', (req, res) => {
         const id = req.params.id; 
         connection.query(
-            'SELECT models.plantName, models.price, models.pic, models.category FROM fav INNER JOIN models ON fav.plantid = models.plantid WHERE models.plantid = ?',
+            'SELECT models.plantName, models.price, models.pic, models.category FROM models INNER JOIN fav ON models.plantid = fav.plantid WHERE fav.plantid = ?',
             [id], 
             function (err, results, fields) {
                 if (err) {
