@@ -61,37 +61,19 @@ app.delete('/users', (req, res) => {
 
 //login
 app.post('/login', (req, res) => {
-    const username = req.body.username;
-    const password = req.body.password;
-
-    if (!username || !password) {
-        return res.status(400).send('Username or password is missing');
-    }
-
     connection.execute(
         'SELECT * FROM users WHERE username=? AND password=?',
-        [username, password],
+        [req.body.username,req.body.password],
         function(err, results, fields) {
             if (err) {
-                console.error('Error in POST /login:', err);
-                res.status(500).send('Error occurred during login');
+                console.error('Error in POST /register:', err);
+                res.status(500).send('Error Login');
             } else {
-                console.log(results);
-                if (results.length > 0) {
-                    const user = results[0];
-                    console.log(user);
-                    res.status(200).send({
-                        status : 'ok',
-                        results
-                    });
-                } else {
-                    res.status(401).send('Invalid username or password');
-                }
+                res.status(200).send(results);
             }
         }
     );
 });
-
 
 
 
