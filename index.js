@@ -200,16 +200,17 @@ app.delete('/favourite', (req, res) => {
     )
 })
 
-    app.delete('/favdel', async (req, res) => {
-        const id = req.params.id;
-        connection.query(
-            'DELETE FROM `fav` WHERE id = ?',
-            [req.body.id],
-         function (err, results, fields) {
+app.delete('/favdel/:id', async (req, res) => {
+    const id = req.params.id;
+    connection.query(
+        'DELETE FROM `fav` WHERE id = ?',
+        [id],
+        function (err, results, fields) {
             res.send(results)
         }
-        );
-    });
+    );
+});
+
 
     app.delete('/favdel/:id', async (req, res) => {
         const id = req.params.id;
