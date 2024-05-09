@@ -181,7 +181,7 @@ app.get('/favourite/get', (req, res) => {
         const { plantId } = req.body;
         connection.query(
             'INSERT INTO cart (plantid) VALUES (?)',
-            [plantid],
+            [plantId],
             function (err, results, fields) {
                 if (err) {
                     console.error('Error adding favourite:', err);
