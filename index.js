@@ -230,7 +230,7 @@ app.get('/favourite/get', (req, res) => {
     app.delete('/delcart/:id', async (req, res) => {
         const id = req.params.id;
         connection.query(
-            'DELETE FROM `fav` WHERE id = ?',
+            'DELETE FROM `cart` WHERE id = ?',
             [id],
             function (err, results, fields) {
                 if (err) {
