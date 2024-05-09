@@ -93,6 +93,21 @@ app.put('/users/:username', (req, res) => {
     );
 });
 
+app.put('/repass' , (req,res) => {
+    connection.query(
+        'UPDATE users SET  `password` = ?  WHERE username = ?',
+        [req.body.password,req.body.username],
+        function (err, results, fields){
+            if(err){
+                console.error('Error in Put /register: ', err);
+                res.status(500).send('Error update password')
+            }else{
+                res.status(201).send(results)
+            }
+        }
+    )
+})
+
 
 
 app.get('/models', (req, res) => {
