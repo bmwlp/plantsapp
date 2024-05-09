@@ -177,6 +177,22 @@ app.get('/favourite/get', (req, res) => {
     });
     
 
+    app.post('/cart/add', (req, res) => {
+        const { plantId } = req.body;
+        connection.query(
+            'INSERT INTO cart (plantid) VALUES (?)',
+            [plantid],
+            function (err, results, fields) {
+                if (err) {
+                    console.error('Error adding favourite:', err);
+                    res.status(500).json({ error: 'Error adding favourite' });
+                    return;
+                }
+                res.status(201).json({ message: 'Favourite added successfully' });
+            }
+        )
+    })
+
 
 app.listen(process.env.PORT || 3000, () => {
     console.log(' 3000')
