@@ -270,7 +270,6 @@ app.delete('/favourite', (req, res) => {
 
 
     
-
     app.get('/cart/get', (req, res) => {
         connection.query(
             'SELECT * FROM cart ',
@@ -314,6 +313,37 @@ app.delete('/favourite', (req, res) => {
              }
         )
     })
+
+    app.delete('/cartdel/:id', async (req, res) => {
+        const id = req.params.id;
+        connection.query(
+            'DELETE FROM `cart` WHERE id = ?',
+            [id],
+            function (err, results, fields) {
+                res.send(results)
+            }
+        );
+    });
+    
+    app.delete('/cartdel/:id', async (req, res) => {
+        const id = req.params.id;
+        connection.query(
+            'DELETE FROM `cart` WHERE id = ?',
+            [id],
+            function (err, results, fields) {
+                if (err) {
+                    console.log(err);
+                    res.status(500).send({ status: 'error', message: 'Error deleting record' });
+                } else {
+                    if (results.affectedRows == 0) {
+                        res.status(404).send({ status: 'not found', message: 'Record not found' });
+                    } else {
+                        res.send({ status: 'success', message: 'Record deleted successfully' });
+                    }
+                }
+            }
+        );
+    });
 
     app.delete('/delcart/:id', async (req, res) => {
         const id = req.params.id;
