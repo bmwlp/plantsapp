@@ -302,17 +302,17 @@ app.delete('/favourite', (req, res) => {
 
     app.get('/cart/select', (req, res) => {
         connection.query(
-            'SELECT models.plantName, models.price, models.pic, models.category FROM cart INNER JOIN models ON cart.plantid = models.plantid',
-            function (err, results, fields) {
-                if (err) {
-                    console.error('Error fetching favourites:', err);
-                    res.status(500).json({ error: 'Error fetching favourites' });
-                    return;
-                    }
-                res.json(results);
-             }
+          'SELECT cart.id, models.plantName, models.price, models.pic, models.category FROM cart INNER JOIN models ON cart.plantid = models.plantid',
+          function (err, results, fields) {
+            if (err) {
+              console.error('Error fetching favourites:', err);
+              res.status(500).json({ error: 'Error fetching favourites' });
+              return;
+            }
+            res.json(results);
+          }
         )
-    })
+      })
 
     app.delete('/cartdel/:id', async (req, res) => {
         const id = req.params.id;
