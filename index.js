@@ -168,7 +168,7 @@ app.get('/favourite/get', (req, res) => {
 
 app.get('/favourite/select', (req, res) => {
     connection.query(
-      'SELECT fav.favid, models.plantName, models.price, models.pic, models.category FROM fav INNER JOIN models ON fav.plantid = models.plantid',
+      'SELECT fav.id, models.plantName, models.price, models.pic, models.category FROM fav INNER JOIN models ON fav.plantid = models.plantid',
       function (err, results, fields) {
         if (err) {
           console.error('Error fetching favourites:', err);
