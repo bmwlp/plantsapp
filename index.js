@@ -111,7 +111,7 @@ app.put('/repass' , (req,res) => {
 app.delete('/userdel', (req, res) => {
     connection.query(
         'DELETE FROM `users` WHERE username =?',
-        [req.body.id],
+        [req.body.username],
          function (err, results, fields) {
             res.send(results)
         }
@@ -166,19 +166,20 @@ app.get('/favourite/get', (req, res) => {
     )
 })
 
-    app.get('/favourite/select', (req, res) => {
-        connection.query(
-            'SELECT models.plantName, models.price, models.pic, models.category FROM fav INNER JOIN models ON fav.plantid = models.plantid',
-            function (err, results, fields) {
-                if (err) {
-                    console.error('Error fetching favourites:', err);
-                    res.status(500).json({ error: 'Error fetching favourites' });
-                    return;
-                    }
-                res.json(results);
-             }
-        )
-    })
+app.get('/favourite/select', (req, res) => {
+    connection.query(
+      'SELECT fav.favid, models.plantName, models.price, models.pic, models.category FROM fav INNER JOIN models ON fav.plantid = models.plantid',
+      function (err, results, fields) {
+        if (err) {
+          console.error('Error fetching favourites:', err);
+          res.status(500).json({ error: 'Error fetching favourites' });
+          return;
+        }
+        res.json(results);
+      }
+    )
+  })
+  
 
     app.get('/detailfav/:id', (req, res) => {
         const id = req.params.id; 
