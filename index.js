@@ -7,7 +7,7 @@ app.use(cors())
 app.use(express.json())
 const connection = mysql.createConnection(process.env.DATABASE_URL)
 app.get('/', (req, res) => {
-    res.send('Hello baimon!!')
+    res.send('Hello bimon, welcome to project')
 })
 app.get('/users', (req, res) => {
     connection.query(
